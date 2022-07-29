@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="nTag.js"></script>
+
+  <script>
+    nTag.fromElement(document.body)
+      .setStyle('margin', '0')
+      .setStyle('padding', '0')
+      .setStyle('color', '#776e65')
+      .setStyle('font-size', '16px')
+      .setStyle('background-color', '#faf8ef')
+
+    const app = nTag.fromId('app')
+
+    const title = new nText()
+    title.setText('Agenda')
+    title.setStyle('padding', '1rem 0')
+    title.setStyle('font-weight', 'bold')
+    title.setStyle('font-size', '2.5rem')
+    title.setStyle('text-align', 'center')
+    title.setStyle('background-color', '#dad8cf')
+    app.append(title)
+
+    const tasksList = new nTag()
+    app.append(tasksList)
+
+    const floatButton = new nLink()
+    floatButton.setText('+')
+    floatButton.href('create.html')
+    floatButton.setStyle('right', '1rem')
+    floatButton.setStyle('width', '3rem')
+    floatButton.setStyle('bottom', '1rem')
+    floatButton.setStyle('height', '3rem')
+    floatButton.setStyle('position', 'fixed')
+    floatButton.setStyle('font-size', '2.5rem')
+    floatButton.setStyle('line-height', '3rem')
+    floatButton.setStyle('text-align', 'center')
+    floatButton.setStyle('border-radius', '50%')
+    floatButton.setStyle('background-color', '#dad8cf')
+
+    app.append(floatButton)
+    
+  </script>
+</body>
+
+</html>
