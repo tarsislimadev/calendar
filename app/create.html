@@ -36,13 +36,13 @@
     who.label.setText('Nome da pessoa')
     app.append(who)
 
-    const when_begin = new nInputDatetimeComponent()
-    when_begin.label.setText('Início')
-    app.append(when_begin)
+    const start_date = new nInputDatetimeComponent()
+    start_date.label.setText('Início')
+    app.append(start_date)
 
-    const when_end = new nInputDatetimeComponent()
-    when_end.label.setText('Fim')
-    app.append(when_end)
+    const end_date = new nInputDatetimeComponent()
+    end_date.label.setText('Fim')
+    app.append(end_date)
 
     const where = new nRadioGroup()
     where.label.setText('Salas')
@@ -51,8 +51,8 @@
     list.map((_, ix) => {
       const num = ix + 1
       const radio = where.addRadio(num, num)
+      radio.setStyle('background-color', '#dad8cf')
       radio.setStyle('padding', '1rem')
-      radio.setStyle('background-color', '#faf8ef')
 
       // TODO: finalizar estilos dos radios
     })
