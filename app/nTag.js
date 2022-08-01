@@ -328,6 +328,11 @@ class nInputDatetimeComponent extends nTag {
     super({
       component: { name: 'input-datetime-component' }
     })
+
+    this.append(this.label)
+    this.append(this.input_date)
+    this.append(this.input_time)
+    this.append(this.error)
   }
 }
 
