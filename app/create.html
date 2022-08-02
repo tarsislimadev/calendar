@@ -12,7 +12,9 @@
   <div id="app"></div>
 
   <script src="./nTag.js"></script>
+  <script src="./components.js"></script>
   <script src="./commons.js"></script>
+  <script src="./api.js"></script>
 
   <script>
     const app = nTag.fromId('app')
@@ -21,32 +23,40 @@
     const center = new nTag()
     center.setContainerStyle('padding', '0.5rem')
 
-    const who = new nInputTextComponent()
-    who.label.setText('Quem')
-    center.append(who)
+    const input_where = new nInputTextComponent()
+    input_where.label.setText('Onde')
+    center.append(input_where)
 
-    const start_date = new nInputDateTimeComponent()
-    start_date.label.setText('Quando começa')
-    center.append(start_date)
+    const input_who = new nInputTextComponent()
+    input_who.label.setText('Quem')
+    center.append(input_who)
 
-    const end_date = new nInputDateTimeComponent()
-    end_date.label.setText('Quando termina')
-    center.append(end_date)
+    const input_start_date = new nInputDateTimeComponent()
+    input_start_date.label.setText('Quando começa')
+    center.append(input_start_date)
 
-    const where = new nRadioGroup()
-    where.label.setText('Onde')
+    const input_end_date = new nInputDateTimeComponent()
+    input_end_date.label.setText('Quando termina')
+    center.append(input_end_date)
 
-    const list = [1, 2, 3, 4]
-    list.map((_, ix) => {
-      const num = ix + 1
-      const radio = where.addRadio(num, num)
-      radio.setStyle('background-color', '#dad8cf')
-      radio.setStyle('padding', '1rem')
+    const input_why = new nInputTextComponent()
+    input_why.label.setText('Por que')
+    center.append(input_why)
 
-      // TODO: finalizar estilos dos radios
+    const button = new nButton()
+    button.setText('Adicionar')
+    button.setStyle('', '')
+    button.on('click', () => {
+      const where = input_where.input.getValue()
+      const who = input_who.input.getValue()
+      const start_date = input_start_date.getValue()
+      const end_date = input_end_date.getValue()
+      const why = input_why.input.getValue()
+
+      // TODO: finalizar adição de eventos
+      // Api.create({ where, who, start_date, end_date, why })
     })
-
-    center.append(where)
+    center.append(button)
 
     app.append(center)
 
