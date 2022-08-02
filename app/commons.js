@@ -7,11 +7,10 @@ nTag.fromElement(document.body)
   .setStyle('background-color', '#eeeeee')
 
 const title = new nText()
-
 title.setText('Agenda')
-title.setStyle('color', '#ffffff')
+title.setStyle('color', '#f0f0f0')
 title.setStyle('padding', '1rem 0')
 title.setStyle('font-weight', 'bold')
 title.setStyle('font-size', '2.5rem')
 title.setStyle('text-align', 'center')
-title.setStyle('background-color', '#000099')
+title.setStyle('background-color', '#0d0e9f')
