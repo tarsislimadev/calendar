@@ -38,10 +38,6 @@ class nTag {
       this.container.classList.add(`ct-${this.options.component.name}`)
     }
 
-    this.makeStyle()
-  }
-
-  makeStyle() {
     this.setStyle('margin', '0')
     this.setStyle('padding', '0')
     this.setStyle('outline', 'none')
@@ -130,17 +126,6 @@ class nTag {
   render() {
     this.container.append(this.element)
     return this.container
-  }
-}
-
-class nMarginAuto extends nTag {
-  constructor() {
-    super({
-      component: { name: 'margin-auto' },
-    })
-
-    this.setStyle('width', '40rem')
-    this.setStyle('margin', '0 auto')
   }
 }
 
@@ -233,6 +218,7 @@ class nFlex extends nTag {
     })
 
     this.setStyle('display', 'flex')
+    this.setStyle('margin-bottom', '0.5rem')
     this.setStyle('justify-content', 'space-between')
   }
 }
@@ -242,6 +228,10 @@ class nLabel extends nTag {
     super({
       component: { name: 'label' },
     })
+
+    this.setStyle('padding-top', '0.5rem')
+    this.setStyle('padding-botton', '0.5rem')
+    this.setStyle('margin-bottom', '0.5rem')
   }
 }
 
@@ -266,15 +256,11 @@ class nInputText extends Valuable {
 
     this.setAttr('type', 'text')
 
-    this.makeStyle()
-  }
-
-  makeStyle() {
-    const width = 'calc(100% - 1rem)'
-    this.setContainerStyle('width', width)
-    this.setStyle('width', width)
+    this.setContainerStyle('display', 'inline-block')
+    this.setContainerStyle('width', '100%')
 
     this.setStyle('padding', '0.5rem')
+    this.setStyle('width', '100%')
   }
 }
 
@@ -307,13 +293,18 @@ class nInputDate extends nTag {
       component: { name: 'input-date' }
     })
 
-    this.flex.append(this.day)
+    this.flex.append(this.makeInput(this.day))
     this.flex.append(this.makeSeparator('/'))
-    this.flex.append(this.month)
+    this.flex.append(this.makeInput(this.month))
     this.flex.append(this.makeSeparator('/'))
-    this.flex.append(this.year)
+    this.flex.append(this.makeInput(this.year))
 
     this.append(this.flex)
+  }
+
+  makeInput(input) {
+    input.setStyle('width', '100%')
+    return input
   }
 
   makeSeparator(text) {
@@ -323,7 +314,8 @@ class nInputDate extends nTag {
     sep.setStyle('width', '1rem')
 
     sep.setStyle('text-align', 'center')
-    sep.setStyle('padding', '0.5rem 0')
+    sep.setStyle('padding-top', '0.5rem')
+    sep.setStyle('padding-botton', '0.5rem')
 
     sep.setText(text)
 
@@ -332,10 +324,10 @@ class nInputDate extends nTag {
 
   getValue() {
     return [
-      this.year.getValue(),
-      this.month.getValue(),
       this.day.getValue(),
-    ].join('-')
+      this.month.getValue(),
+      this.year.getValue(),
+    ].map((value) => value.toString())
   }
 }
 
@@ -350,26 +342,34 @@ class nInputTime extends nTag {
       component: { name: 'input-time' }
     })
 
-    this.flex.append(this.hour)
+    this.flex.append(this.makeInput(this.hour))
 
     const sep = new nTag()
     sep.setText(':')
+    
     sep.setContainerStyle('width', '1rem')
+
+    sep.setStyle('padding-botton', '0.5rem')
+    sep.setStyle('padding-top', '0.5rem')
     sep.setStyle('text-align', 'center')
-    sep.setStyle('padding', '0.5rem 0')
     sep.setStyle('width', '1rem')
     this.flex.append(sep)
 
-    this.flex.append(this.minutes)
+    this.flex.append(this.makeInput(this.minutes))
 
     this.append(this.flex)
+  }
+
+  makeInput(input) {
+    input.setStyle('width', '100%')
+    return input
   }
 
   getValue() {
     return [
       this.hour.getValue(),
-      this.minutes.getValue()
-    ].join(':')
+      this.minutes.getValue(),
+    ].map((str) => str.toString())
   }
 }
 
@@ -380,110 +380,17 @@ class nError extends nTag {
     })
 
     this.setStyle('color', 'red')
+    this.setStyle('padding-top', '0.5rem')
+    this.setStyle('padding-botton', '0.5rem')
+    this.setStyle('margin-bottom', '0.5rem')
   }
 }
-
-/// components ////
 
 class nCenter extends nTag {
   constructor() {
-    super({ component: { name: 'margin-auto' } })
+    super({ component: { name: 'center' } })
 
     this.setStyle('margin', '0 auto')
     this.setStyle('width', '42rem')
-  }
-}
-
-class nInputTextComponent extends nTag {
-  label = new nLabel()
-  input = new nInputText()
-  error = new nError()
-
-  constructor() {
-    super({
-      component: { name: 'input-text-component' },
-    })
-
-
-    this.label.setStyle('padding', '0.5rem 0')
-    this.append(this.label)
-
-    this.input.setStyle('padding', '0.5rem 0')
-    this.input.setStyle('width', '100%')
-    this.append(this.input)
-
-    this.error.setStyle('padding', '0.5rem 0')
-    this.append(this.error)
-  }
-}
-
-class nInputDateTimeComponent extends nTag {
-  label = new nLabel()
-
-  flex = new nFlex
-
-  input_date = new nInputDate()
-  input_time = new nInputTime()
-
-  error = new nError()
-
-  constructor() {
-    super({
-      component: { name: 'input-datetime-component' },
-    })
-
-    this.append(this.label)
-
-    this.flex.append(this.input_date)
-
-    const sep = new nText()
-    sep.setContainerStyle('width', '1rem')
-    sep.setStyle('text-align', 'center')
-    sep.setStyle('padding', '0.5rem 0')
-    sep.setStyle('width', '1rem')
-    this.flex.append(sep)
-
-    this.flex.append(this.input_time)
-    this.append(this.flex)
-
-    this.append(this.error)
-  }
-
-  getValue() {
-    return [
-      this.input_date.getValue(),
-      this.input_time.getValue()
-    ].join(' ')
-  }
-}
-
-class nRadioGroup extends nTag {
-  label = new nLabel
-  flex = new nFlex
-  error = new nError
-
-  constructor() {
-    super({
-      component: { name: 'radio-group' },
-    })
-
-    this.label.setStyle('margin-bottom', '0.5rem')
-    this.append(this.label)
-
-    this.flex.setStyle('margin-bottom', '0.5rem')
-    this.append(this.flex)
-
-    this.error.setStyle('margin-bottom', '0.5rem')
-    this.append(this.error)
-  }
-
-  addRadio(name, value) {
-    const radio = new nTag()
-
-    radio.setData('value', value)
-    radio.setText(name)
-
-    this.flex.append(radio)
-    return radio
   }
 }
