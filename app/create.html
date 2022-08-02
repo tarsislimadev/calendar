@@ -11,27 +11,30 @@
 <body>
   <div id="app"></div>
 
-  <script src="nTag.js"></script>
-  <script src="commons.js"></script>
+  <script src="./nTag.js"></script>
+  <script src="./commons.js"></script>
 
   <script>
     const app = nTag.fromId('app')
     app.append(title)
 
+    const center = new nTag()
+    center.setContainerStyle('padding', '0.5rem')
+
     const who = new nInputTextComponent()
-    who.label.setText('Nome da pessoa')
-    app.append(who)
+    who.label.setText('Quem')
+    center.append(who)
 
-    const start_date = new nInputDatetimeComponent()
-    start_date.label.setText('Início')
-    app.append(start_date)
+    const start_date = new nInputDateTimeComponent()
+    start_date.label.setText('Quando começa')
+    center.append(start_date)
 
-    const end_date = new nInputDatetimeComponent()
-    end_date.label.setText('Fim')
-    app.append(end_date)
+    const end_date = new nInputDateTimeComponent()
+    end_date.label.setText('Quando termina')
+    center.append(end_date)
 
     const where = new nRadioGroup()
-    where.label.setText('Salas')
+    where.label.setText('Onde')
 
     const list = [1, 2, 3, 4]
     list.map((_, ix) => {
@@ -43,7 +46,9 @@
       // TODO: finalizar estilos dos radios
     })
 
-    app.append(where)
+    center.append(where)
+
+    app.append(center)
 
   </script>
 </body>
