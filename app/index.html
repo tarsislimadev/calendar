@@ -12,24 +12,10 @@
   <div id="app"></div>
 
   <script src="nTag.js"></script>
+  <script src="commons.js"></script>
 
   <script>
-    nTag.fromElement(document.body)
-      .setStyle('margin', '0')
-      .setStyle('padding', '0')
-      .setStyle('color', '#776e65')
-      .setStyle('font-size', '16px')
-      .setStyle('background-color', '#faf8ef')
-
     const app = nTag.fromId('app')
-
-    const title = new nText()
-    title.setText('Agenda')
-    title.setStyle('padding', '1rem 0')
-    title.setStyle('font-weight', 'bold')
-    title.setStyle('font-size', '2.5rem')
-    title.setStyle('text-align', 'center')
-    title.setStyle('background-color', '#dad8cf')
     app.append(title)
 
     const tasksList = new nTag()
