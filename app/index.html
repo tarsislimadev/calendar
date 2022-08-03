@@ -14,30 +14,79 @@
   <script src="./nTag.js"></script>
   <script src="./components.js"></script>
   <script src="./commons.js"></script>
+  <script src="./api.js"></script>
 
   <script>
     const app = nTag.fromId('app')
     app.append(title)
 
     const tasksList = new nTag()
+    tasksList.setStyle('padding', '1rem')
+    Api.list()
+      .then(list => {
+        tasksList.clear()
+
+        list.map((event) => {
+          const item = new nTag()
+          item.setStyle('margin-bottom', '2rem')
+
+          const where = new nTag()
+          where.setStyle('font-size', '1.5rem')
+          where.setStyle('margin-bottom', '0.5rem')
+          where.setText(event.where)
+          item.append(where)
+
+          const start_date = new nTag()
+          start_date.setStyle('margin-bottom', '0.5rem')
+          const [sday, smonth, syear, shour, sminute] = event.start_date
+          start_date.setText(`${sday}/${smonth}/${syear} ${shour}:${sminute}hs`)
+          item.append(start_date)
+
+          const end_date = new nTag()
+          end_date.setStyle('margin-bottom', '0.5rem')
+          const [eday, emonth, eyear, ehour, eminute] = event.end_date
+          end_date.setText(`${eday}/${emonth}/${eyear} ${ehour}:${eminute}hs`)
+          item.append(end_date)
+
+          const who = new nTag()
+          who.setStyle('margin-bottom', '0.5rem')
+          who.setText(event.who)
+          item.append(who)
+
+          const why = new nTag()
+          why.setStyle('margin-bottom', '0.5rem')
+          why.setText(event.why)
+          item.append(why)
+
+          tasksList.append(item)
+        })
+      })
+      .catch((err) => {
+        tasksList.clear()
+
+        const error = new nError()
+        error.setText(err.message)
+        tasksList.append(error)
+      })
+
     app.append(tasksList)
 
-    const floatButton = new nLink()
-    floatButton.setText('+')
-    floatButton.href('create.html')
-    floatButton.setStyle('right', '1rem')
-    floatButton.setStyle('width', '3rem')
-    floatButton.setStyle('bottom', '1rem')
-    floatButton.setStyle('height', '3rem')
-    floatButton.setStyle('color', '#eeeeee')
-    floatButton.setStyle('position', 'fixed')
-    floatButton.setStyle('font-size', '2.5rem')
-    floatButton.setStyle('line-height', '3rem')
-    floatButton.setStyle('text-align', 'center')
-    floatButton.setStyle('border-radius', '50%')
-    floatButton.setStyle('background-color', '#000099')
-    app.append(floatButton)
-    
+    const button = new nLink()
+    button.setText('+')
+    button.href('create.html')
+    button.setStyle('right', '1rem')
+    button.setStyle('width', '3rem')
+    button.setStyle('bottom', '1rem')
+    button.setStyle('height', '3rem')
+    button.setStyle('color', '#eeeeee')
+    button.setStyle('position', 'fixed')
+    button.setStyle('font-size', '2.5rem')
+    button.setStyle('line-height', '3rem')
+    button.setStyle('text-align', 'center')
+    button.setStyle('border-radius', '50%')
+    button.setStyle('background-color', '#000099')
+    app.append(button)
+
   </script>
 </body>
 
