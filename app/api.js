@@ -1,8 +1,22 @@
 
 const Base = {}
 
+Base.name = (name) => ['base', name].join('.')
+
+Base.get = (name) => {
+  const table = JSON.parse(localStorage.getItem(Base.name(name)))
+  if (!table) return []
+  return table.filter((item) => !!item)
+}
+
 Base.append = (tuple, content) => {
-  console.log('Base.append', { tuple, content })
+  const data = Base.get(tuple, [])
+  console.log({ content })
+  data.push(content)
+  localStorage.setItem(
+    Base.name(tuple),
+    JSON.stringify(data)
+  )
 }
 
 class FormConstructor {
@@ -16,14 +30,25 @@ class FormConstructor {
   }
 
   validate(vlds) {
-    // TODO: finalizar implementação
+    return new Promise((s, _) => s()) // FIXME
   }
 }
 
 const Forms = new FormConstructor
 
+class FlowConstructor {
+
+  goTo(page) {
+    if (!page) throw new Error('Page error')
+    window.location = page
+  }
+
+}
+
+const Flow = new FlowConstructor
+
 const Validations = {
-  required: (value, errorMessage = '') => 'required',
+  required: (value, errorMessage = 'Required field.') => !value ? errorMessage : 'Required',
 }
 
 const Api = {}
@@ -38,4 +63,5 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
       why: [Validations.required(),],
     })
     .then(() => Base.append('events', { where, who, start_date, end_date, why }))
-    // .catch(() => {    })
+
+Api.list = () => Promise.resolve(Base.get('events'))
