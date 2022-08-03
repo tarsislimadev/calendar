@@ -202,7 +202,6 @@ class nLink extends nTag {
 
     this.setStyle('text-decoration', 'none')
     this.setStyle('color', 'inherit')
-    // this.setStyle('color', '#1f080a')
   }
 
   href(href) {
@@ -218,7 +217,6 @@ class nFlex extends nTag {
     })
 
     this.setStyle('display', 'flex')
-    this.setStyle('margin-bottom', '0.5rem')
     this.setStyle('justify-content', 'space-between')
   }
 }
@@ -231,7 +229,6 @@ class nLabel extends nTag {
 
     this.setStyle('padding-top', '0.5rem')
     this.setStyle('padding-botton', '0.5rem')
-    this.setStyle('margin-bottom', '0.5rem')
   }
 }
 
@@ -382,7 +379,6 @@ class nError extends nTag {
     this.setStyle('color', 'red')
     this.setStyle('padding-top', '0.5rem')
     this.setStyle('padding-botton', '0.5rem')
-    this.setStyle('margin-bottom', '0.5rem')
   }
 }
 
