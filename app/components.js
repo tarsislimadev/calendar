@@ -57,6 +57,13 @@ class nInputDateTimeComponent extends nComponent {
       ...this.input_time.getValue()
     ]
   }
+
+  setValue(value = ['', '']) {
+    const [yday, smonth, syear, shour, sminutes] = value
+    this.input_date.setValue([yday, smonth, syear])
+    this.input_time.setValue([shour, sminutes])
+    return this
+  }
 }
 
 class nRadioGroup extends nTag {
