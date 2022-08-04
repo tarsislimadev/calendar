@@ -190,6 +190,11 @@ class nButton extends nTag {
       element: { tagName: 'button' },
       component: { name: 'button' },
     })
+
+    this.setStyle('border', 'none')
+    this.setStyle('outline', 'none')
+    this.setStyle('padding', '1rem')
+    this.setStyle('font-weight', 'bold')
   }
 }
 
@@ -270,10 +275,6 @@ class nInputNumber extends Valuable {
 
     this.setAttr('type', 'number')
 
-    const width = 'calc(100% - 1rem)'
-    this.setContainerStyle('width', width)
-    this.setStyle('width', width)
-
     this.setStyle('padding', '0.5rem')
   }
 }
@@ -326,6 +327,14 @@ class nInputDate extends nTag {
       this.year.getValue(),
     ].map((value) => value.toString())
   }
+
+  setValue(value = []) {
+    const [day, month, year] = value
+    this.day.setValue(day)
+    this.month.setValue(month)
+    this.year.setValue(year)
+    return this
+  }
 }
 
 class nInputTime extends nTag {
@@ -343,7 +352,7 @@ class nInputTime extends nTag {
 
     const sep = new nTag()
     sep.setText(':')
-    
+
     sep.setContainerStyle('width', '1rem')
 
     sep.setStyle('padding-botton', '0.5rem')
@@ -367,6 +376,13 @@ class nInputTime extends nTag {
       this.hour.getValue(),
       this.minutes.getValue(),
     ].map((str) => str.toString())
+  }
+
+  setValue(value = []) {
+    const [hour, minutes] = value
+    this.hour.setValue(hour)
+    this.minutes.setValue(minutes)
+    return this
   }
 }
 
