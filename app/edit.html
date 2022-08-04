@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script src="./nTag.js"></script>
+  <script src="./components.js"></script>
+  <script src="./commons.js"></script>
+  <script src="./api.js"></script>
+
+  <script>
+    const app = nTag.fromId('app')
+    app.append(title)
+
+    const center = new nTag()
+    center.setContainerStyle('padding', '0.5rem')
+
+    const input_where = new nInputTextComponent()
+    input_where.label.setText('Onde')
+    center.append(input_where)
+
+    const input_start_date = new nInputDateTimeComponent()
+    input_start_date.label.setText('Quando começa')
+    center.append(input_start_date)
+
+    const input_end_date = new nInputDateTimeComponent()
+    input_end_date.label.setText('Quando termina')
+    center.append(input_end_date)
+
+    const input_who = new nInputTextComponent()
+    input_who.label.setText('Quem')
+    center.append(input_who)
+
+    const input_why = new nInputTextComponent()
+    input_why.label.setText('Por que')
+    center.append(input_why)
+
+    let id = -1
+
+    const button = new nButton()
+    button.setText('Editar')
+    button.setStyle('width', '100%')
+    button.setStyle('color', '#eeeeee')
+    button.setStyle('padding', '0.5rem')
+    button.setStyle('background-color', '#000099')
+    button.on('click', () => {
+      const where = input_where.input.getValue()
+      const who = input_who.input.getValue()
+      const start_date = input_start_date.getValue()
+      const end_date = input_end_date.getValue()
+      const why = input_why.input.getValue()
+
+      Api.update(id, { where, who, start_date, end_date, why })
+        .then(() => Flow.goTo('index.html'))
+        .catch(console.error)
+    })
+    center.append(button)
+
+    const errorMessage = new nError()
+    center.append(errorMessage)
+
+    Promise.resolve(Base.retrieve('params.edit', 0))
+      .then(({ _id, where, who, start_date, end_date, why }) => {
+        id = _id
+        input_where.input.setValue(where)
+        input_who.input.setValue(who)
+        input_start_date.setValue(start_date)
+        input_end_date.setValue(end_date)
+        input_why.input.setValue(why)
+      })
+      .catch(({ message }) => errorMessage.setText(message))
+
+    app.append(center)
+
+  </script>
+</body>
+
+</html>
