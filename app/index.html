@@ -58,6 +58,29 @@
           why.setText(event.why)
           item.append(why)
 
+          const createButton = (text, btnFn) => {
+            const btn = new nButton()
+
+            btn.setStyle('background-color', '#000099')
+            btn.setStyle('color', '#ffffff')
+
+            btn.setText(text)
+            btn.on('click', () => btnFn())
+
+            return btn
+          }
+
+          const footer = new nFlex()
+          footer.append(createButton('edit', () => {
+            Base.append('params.edit', event._id)
+            Flow.goTo('edit.html', event)
+          }))
+          footer.append(createButton('delete', () => {
+            Base.append('params.delete', event._id)
+            Flow.goTo('delete.html', event)
+          }))
+          item.append(footer)
+
           tasksList.append(item)
         })
       })
