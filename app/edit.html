@@ -43,7 +43,7 @@
     input_why.label.setText('Por que')
     center.append(input_why)
 
-    let id = -1
+    const edit_id = Params.get('edit')
 
     const button = new nButton()
     button.setText('Editar')
@@ -58,25 +58,21 @@
       const end_date = input_end_date.getValue()
       const why = input_why.input.getValue()
 
-      Api.update(id, { where, who, start_date, end_date, why })
+      Api.update(edit_id, { where, who, start_date, end_date, why })
         .then(() => Flow.goTo('index.html'))
         .catch(console.error)
     })
     center.append(button)
 
-    const errorMessage = new nError()
-    center.append(errorMessage)
-
-    Promise.resolve(Base.retrieve('params.edit', 0))
-      .then(({ _id, where, who, start_date, end_date, why }) => {
-        id = _id
-        input_where.input.setValue(where)
-        input_who.input.setValue(who)
-        input_start_date.setValue(start_date)
-        input_end_date.setValue(end_date)
-        input_why.input.setValue(why)
+    Promise.resolve(Base.retrieve('events').find((ev) => ev._id === edit_id))
+      .then((event) => {
+        input_where.input.setValue(event.where)
+        input_who.input.setValue(event.who)
+        input_start_date.setValue(event.start_date)
+        input_end_date.setValue(event.end_date)
+        input_why.input.setValue(event.why)
       })
-      .catch(({ message }) => errorMessage.setText(message))
+      .catch(console.error)
 
     app.append(center)
 

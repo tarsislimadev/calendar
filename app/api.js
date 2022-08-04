@@ -1,36 +1,38 @@
 
+const Params = {}
+
+Params.get = (name) =>
+  JSON.parse(localStorage.getItem(['params', name].join('.')))
+
+Params.set = (name, value) =>
+  localStorage.setItem(['params', name].join('.'), JSON.stringify(value))
+
 const Base = {}
 
-Base.retrieve = (name, ix = null) => {
-  const table = JSON.parse(localStorage.getItem(name))
+Base.retrieve = (name) => {
+  const table = JSON.parse(localStorage.getItem(['base', name].join('.')))
   if (!table) return []
-  const list = table.filter((item) => !!item).map((item, ix) => {
-    item._id = ix
-    return item
-  })
-
-  if (ix !== null) return list[ix]
-  return list
+  return table
+    .filter((item) => !!item)
+    .map((item, ix) => {
+      item._id = ix
+      return item
+    })
 }
 
-Base.append = (name, content) => {
-  const data = Base.retrieve(name)
-  data.push(content)
-  localStorage.setItem(name, JSON.stringify(data))
+Base.setItem = (name, data) =>
+  localStorage.setItem(['base', name].join('.'), JSON.stringify(data))
+
+Base.append = (name, data) => {
+  const arr = Base.retrieve(name)
+  arr.push(data)
+  Base.setItem(name, arr)
 }
 
-Base.replace = (name, identifier, content) => {
-  const data = Base.retrieve(name)
-  const newData = []
-
-  console.log({ data })
-
-  for (let i = 0; i < data.length; i++) {
-    if (i === identifier) { newData[identifier] = content }
-    else { newData[identifier] = data[i] }
-  }
-
-  localStorage.setItem(name, JSON.stringify(newData))
+Base.replace = (name, id, data) => {
+  const arr = Base.retrieve(name)
+  const _arr = arr.map((obj) => obj._id === id ? data : obj)
+  Base.setItem(name, _arr)
 }
 
 class FormConstructor {
