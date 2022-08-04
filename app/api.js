@@ -1,22 +1,36 @@
 
 const Base = {}
 
-Base.name = (name) => ['base', name].join('.')
-
-Base.get = (name) => {
-  const table = JSON.parse(localStorage.getItem(Base.name(name)))
+Base.retrieve = (name, ix = null) => {
+  const table = JSON.parse(localStorage.getItem(name))
   if (!table) return []
-  return table.filter((item) => !!item)
+  const list = table.filter((item) => !!item).map((item, ix) => {
+    item._id = ix
+    return item
+  })
+
+  if (ix !== null) return list[ix]
+  return list
 }
 
-Base.append = (tuple, content) => {
-  const data = Base.get(tuple, [])
-  console.log({ content })
+Base.append = (name, content) => {
+  const data = Base.retrieve(name)
   data.push(content)
-  localStorage.setItem(
-    Base.name(tuple),
-    JSON.stringify(data)
-  )
+  localStorage.setItem(name, JSON.stringify(data))
+}
+
+Base.replace = (name, identifier, content) => {
+  const data = Base.retrieve(name)
+  const newData = []
+
+  console.log({ data })
+
+  for (let i = 0; i < data.length; i++) {
+    if (i === identifier) { newData[identifier] = content }
+    else { newData[identifier] = data[i] }
+  }
+
+  localStorage.setItem(name, JSON.stringify(newData))
 }
 
 class FormConstructor {
@@ -38,9 +52,9 @@ const Forms = new FormConstructor
 
 class FlowConstructor {
 
-  goTo(page) {
-    if (!page) throw new Error('Page error')
-    window.location = page
+  goTo(name) {
+    if (!name) throw new Error('Page error')
+    window.location = name
   }
 
 }
@@ -64,4 +78,25 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
     })
     .then(() => Base.append('events', { where, who, start_date, end_date, why }))
 
-Api.list = () => Promise.resolve(Base.get('events'))
+Api.list = () => Promise.resolve(Base.retrieve('events'))
+
+Api.get = (tuple, ix = 0) => {
+  const list = Base.retrieve(tuple)
+
+  if (!(list && list.length)) {
+    return null
+  }
+
+  return list[ix]
+}
+
+Api.update = (id, { where, who, start_date, end_date, why }) =>
+  Forms.with({ where, who, start_date, end_date, why })
+    .validate({
+      where: [Validations.required(),],
+      who: [Validations.required(),],
+      start_date: [Validations.required(),],
+      end_date: [Validations.required(),],
+      why: [Validations.required(),],
+    })
+    .then(() => Base.replace('events', id, { where, who, start_date, end_date, why }))
