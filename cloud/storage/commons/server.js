@@ -64,7 +64,7 @@ const HttpResponse = function () {
     if (err instanceof ApplicationError) {
       self.config.status_code = err.status_code
       self.config.status_message = err.status_message
-      data.extras = err.extras
+      // data.extras = err.extras
     }
 
     self.config.body = JSON.stringify({
