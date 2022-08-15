@@ -36,8 +36,8 @@ class DataObject {
     return this.readUnsafeString(name).replace(/\s+/ig, '')
   }
 
-  writeString(name, content) {
-    fsPkg.writeFileSync(this.propName(name), content)
+  writeString(name, content = '') {
+    fsPkg.writeFileSync(this.propName(name), Buffer.from(content))
     return this
   }
 
