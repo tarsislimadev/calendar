@@ -67,6 +67,64 @@ const Validations = {
   required: (value, errorMessage = 'Required field.') => !value ? errorMessage : 'Required',
 }
 
+class AjaxResponse {
+  xhr = {}
+
+  constructor(xhr) {
+    this.xhr = xhr
+  }
+
+  getResponse() {
+    return JSON.parse(this.xhr.responseText)
+  }
+
+  getStatus() {
+    return this.getResponse()['status']
+  }
+
+  getMessage() {
+    return this.getResponse()['message']
+  }
+
+  getData() {
+    return this.getResponse()['data']
+  }
+
+  getExtra() {
+    return this.getResponse()['extra']
+  }
+
+}
+
+class SuccessResponse extends AjaxResponse {
+  get(name) {
+    return this.getData()[name]
+  }
+}
+
+class ErrorResponse extends AjaxResponse { }
+
+const Ajax = {}
+
+Ajax.servers = {}
+Ajax.servers['default'] = {
+  url: 'http://0.0.0.0/api/v1'
+}
+
+Ajax.post = (paths = [], data = {}) => new Promise((resolve, reject) => {
+  const xhr = new XMLHttpRequest()
+  xhr.open('POST', paths.join('/'), true)
+
+  const onComplete = (xhr) => [200, '200'].indexOf(xhr.status) !== -1
+    ? resolve(new SuccessResponse(xhr))
+    : reject(new ErrorResponse(xhr))
+
+  xhr.onload = () => onComplete(xhr)
+  xhr.onerror = () => onComplete(xhr)
+
+  xhr.send(JSON.stringify(data))
+})
+
 const Api = {}
 
 Api.create = ({ where, who, start_date, end_date, why }) =>
@@ -78,7 +136,7 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
       end_date: [Validations.required(),],
       why: [Validations.required(),],
     })
-    .then(() => Base.append('events', { where, who, start_date, end_date, why }))
+    .then(() => Ajax.post([Ajax.servers.default.url, 'tasks', 'create'], { where, who, start_date, end_date, why }))
 
 Api.list = () => Promise.resolve(Base.retrieve('events'))
 

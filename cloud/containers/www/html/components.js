@@ -99,3 +99,33 @@ class nRadioGroup extends nTag {
     return radio
   }
 }
+
+class nListComponent extends nTag {
+
+  list = []
+  renderable = () => (new nError).setText('no one renderable')
+
+  constructor() {
+    super({
+      component: { name: 'list-component' }
+    })
+  }
+
+  push(data = {}) {
+    const self = this
+    self.list.push(data)
+    self.clear()
+    self.list.map((item) => self.append(self.renderable(item)))
+    return self
+  }
+
+  setRenderable(renderable) {
+    this.renderable = renderable
+    return this
+  }
+
+  getRenderable() {
+    return this.renderable || (() => new nText().setText('no draw'))
+  }
+}
+
