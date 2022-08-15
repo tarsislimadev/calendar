@@ -1,11 +1,21 @@
 version: '3'
 
 services:
-  app:
-    hostname: app
-    build: './app'
+
+  www:
+    hostname: www
+    build: './cloud/containers/www'
     restart: always
     volumes:
-      - './app:/usr/share/nginx/html'
+      - './cloud/containers/www/html:/usr/share/nginx/html'
     ports:
       - '80:80'
+
+  api_tasks_create:
+    hostname: 'api_tasks_create'
+    build: './cloud/containers/tasks-create/'
+    restart: always
+    volumes:
+      - './cloud/containers/tasks-create/:/agenda'
+      - './cloud/storage/commons/:/agenda/commons'
+      - './data:/agenda/data'
