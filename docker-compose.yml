@@ -19,3 +19,12 @@ services:
       - './cloud/containers/tasks-create/:/agenda'
       - './cloud/storage/commons/:/agenda/commons'
       - './data:/agenda/data'
+
+  api_tasks_list:
+    hostname: 'api_tasks_list'
+    build: './cloud/containers/tasks-list/'
+    restart: always
+    volumes:
+      - './cloud/containers/tasks-list/:/agenda'
+      - './cloud/storage/commons/:/agenda/commons'
+      - './data:/agenda/data'
