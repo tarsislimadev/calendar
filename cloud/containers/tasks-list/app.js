@@ -1,10 +1,3 @@
-const db = require('/agenda/commons/db')
-const tasksIndex = db.in('tasks')
-const loginsIndex = db.in('logins')
+const tasksIndex = require('/agenda/commons/db').in('tasks')
 
-module.exports = ({ headers: { login } }, res) => {
-  loginsIndex.selectById(login)
-
-  return res.json({ list: [] }) // TODO
-}
-
+module.exports = (_, res) => res.json({ list: tasksIndex.listJSON() })
