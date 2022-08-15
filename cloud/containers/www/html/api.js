@@ -138,7 +138,7 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
     })
     .then(() => Ajax.post([Ajax.servers.default.url, 'tasks', 'create'], { where, who, start_date, end_date, why }))
 
-Api.list = () => Promise.resolve(Base.retrieve('events'))
+Api.list = () => Ajax.post([Ajax.servers.default.url, 'tasks', 'list'], {})
 
 Api.get = (tuple, ix = 0) => {
   const list = Base.retrieve(tuple)
