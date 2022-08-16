@@ -59,7 +59,7 @@ class nInputDateTimeComponent extends nComponent {
   }
 
   setValue(value = ['', '']) {
-    const [yday, smonth, syear, shour, sminutes] = value
+    const [yday, smonth, syear, shour, sminutes] = (value || '').split('-')
     this.input_date.setValue([yday, smonth, syear])
     this.input_time.setValue([shour, sminutes])
     return this

@@ -245,6 +245,7 @@ class Valuable extends nTag {
 
   setValue(value) {
     this.element.value = value
+    return this
   }
 
 }
@@ -328,7 +329,7 @@ class nInputDate extends nTag {
     ].map((value) => value.toString())
   }
 
-  setValue(value = []) {
+  setValue(value = ['', '', '']) {
     const [day, month, year] = value
     this.day.setValue(day)
     this.month.setValue(month)

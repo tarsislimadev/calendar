@@ -17,6 +17,8 @@
   <script src="./api.js"></script>
 
   <script>
+    Local.clear()
+
     const app = nTag.fromId('app')
     app.append(title)
 
@@ -68,13 +70,13 @@
 
       const footer = new nFlex()
 
-      footer.append(createButton('edit', () => {
-        Params.set('edit', event._id)
-        Flow.goTo('edit.html', event)
+      footer.append(createButton('update', () => {
+        Local.set('update', event)
+        Flow.goTo('update.html', event)
       }))
 
       footer.append(createButton('delete', () => {
-        Params.set('delete', event._id)
+        Local.set('delete', event)
         Flow.goTo('delete.html', event)
       }))
 
