@@ -43,14 +43,16 @@ class DataObject {
 
   writeMany(many) {
     Object.keys(many)
-      .map((key) => this.writeString(key, many[key]), this)
+      .map((key) => ({ key, value: many[key] }))
+      .map(({ key, value }) => this.writeString(key, Array.isArray(value) ? value.join('\n') : value), this)
 
     return this
   }
 
   toJSON() {
     const json = {}
-    this.props().map((p) => json[p] = this.readString(p), this)
+    json['_id'] = this.getId()
+    this.props().map((prop) => json[prop] = this.readString(prop), this)
     return json
   }
 }
@@ -99,9 +101,9 @@ class DataBase {
   }
 
   selectById(id) {
-    return this.list()
-      .filter((data) => data.getId() === id.toString())
-      .find(data => data)
+    return this.list().find((data) => data.getId() == id)
+      ? new DataObject(this.params.dir, id)
+      : null
   }
 
   selectOne(params = {}) {
