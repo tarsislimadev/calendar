@@ -28,3 +28,21 @@ services:
       - './cloud/containers/tasks-list/:/agenda'
       - './cloud/storage/commons/:/agenda/commons'
       - './data:/agenda/data'
+
+  api_tasks_get:
+    hostname: 'api_tasks_get'
+    build: './cloud/containers/tasks-get/'
+    restart: always
+    volumes:
+      - './cloud/containers/tasks-get/:/agenda'
+      - './cloud/storage/commons/:/agenda/commons'
+      - './data:/agenda/data'
+
+  api_tasks_update:
+    hostname: 'api_tasks_update'
+    build: './cloud/containers/tasks-update/'
+    restart: always
+    volumes:
+      - './cloud/containers/tasks-update/:/agenda'
+      - './cloud/storage/commons/:/agenda/commons'
+      - './data:/agenda/data'
