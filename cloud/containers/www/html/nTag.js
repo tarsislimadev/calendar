@@ -326,11 +326,11 @@ class nInputDate extends nTag {
       this.day.getValue(),
       this.month.getValue(),
       this.year.getValue(),
-    ].map((value) => value.toString())
+    ].map((value) => value.toString()).join(' ')
   }
 
-  setValue(value = ['', '', '']) {
-    const [day, month, year] = value
+  setValue(value = '') {
+    const [day, month, year] = value.split(' ')
     this.day.setValue(day)
     this.month.setValue(month)
     this.year.setValue(year)
@@ -376,11 +376,11 @@ class nInputTime extends nTag {
     return [
       this.hour.getValue(),
       this.minutes.getValue(),
-    ].map((str) => str.toString())
+    ].map((str) => str.toString()).join(' ')
   }
 
-  setValue(value = []) {
-    const [hour, minutes] = value
+  setValue(value = '') {
+    const [hour, minutes] = value.split(' ')
     this.hour.setValue(hour)
     this.minutes.setValue(minutes)
     return this
