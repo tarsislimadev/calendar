@@ -53,15 +53,15 @@ class nInputDateTimeComponent extends nComponent {
 
   getValue() {
     return [
-      ...this.input_date.getValue(),
-      ...this.input_time.getValue()
-    ]
+      this.input_date.getValue(),
+      this.input_time.getValue()
+    ].join(' ')
   }
 
   setValue(value = ['', '']) {
-    const [yday, smonth, syear, shour, sminutes] = (value || '').split('-')
-    this.input_date.setValue([yday, smonth, syear])
-    this.input_time.setValue([shour, sminutes])
+    const [yday, smonth, syear, shour, sminutes] = (value || '').split(' ')
+    this.input_date.setValue([yday, smonth, syear].join(' '))
+    this.input_time.setValue([shour, sminutes].join(' '))
     return this
   }
 }
