@@ -1,3 +1,4 @@
 
 [x] app/create.html:56 - finalizar adição de eventos
-[ ] app/api.js:19 - finalizar implementação
+[ ] as datas estao senso salvas de forma errada
+[ ] todos os .getValue retornam strings
