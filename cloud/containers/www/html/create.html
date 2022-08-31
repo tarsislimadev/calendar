@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda</title>
+  <title>Calendario</title>
 </head>
 
 <body>
@@ -52,8 +52,8 @@
     button.on('click', () => {
       const where = input_where.input.getValue()
       const who = input_who.input.getValue()
-      const start_date = input_start_date.getValue().reverse().join('-')
-      const end_date = input_end_date.getValue().reverse().join('-')
+      const start_date = input_start_date.getValue()
+      const end_date = input_end_date.getValue()
       const why = input_why.input.getValue()
 
       Api.create({ where, who, start_date, end_date, why })
