@@ -140,15 +140,7 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
 
 Api.list = () => Ajax.post([Ajax.servers.default.url, 'tasks', 'list'], {})
 
-Api.get = (tuple, ix = 0) => {
-  const list = Base.retrieve(tuple)
-
-  if (!(list && list.length)) {
-    return null
-  }
-
-  return list[ix]
-}
+Api.get = ({ _id }) => Ajax.post([Ajax.servers.default.url, 'tasks', 'get'], { _id })
 
 Api.update = (id, { where, who, start_date, end_date, why }) =>
   Forms.with({ where, who, start_date, end_date, why })
