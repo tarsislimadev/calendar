@@ -52,7 +52,7 @@ class DataObject {
   toJSON() {
     const json = {}
     json['_id'] = this.getId()
-    this.props().map((prop) => json[prop] = this.readString(prop), this)
+    this.props().map((prop) => json[prop] = this.readUnsafeString(prop), this)
     return json
   }
 }
