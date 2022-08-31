@@ -1,8 +1,8 @@
-const { ApplicationError } = require('/agenda/commons/errors')
+const { ApplicationError } = require('/calendario/commons/errors')
 const netPkg = require('net')
 const { Buffer } = require('buffer')
 
-const app = require('/agenda/app')
+const app = require('/calendario/app')
 
 const LINE_BREAK = '\r\n'
 

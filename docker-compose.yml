@@ -16,33 +16,33 @@ services:
     build: './cloud/containers/tasks-create/'
     restart: always
     volumes:
-      - './cloud/containers/tasks-create/:/agenda'
-      - './cloud/storage/commons/:/agenda/commons'
-      - './data:/agenda/data'
+      - './cloud/containers/tasks-create/:/calendario'
+      - './cloud/storage/commons/:/calendario/commons'
+      - './data:/calendario/data'
 
   api_tasks_list:
     hostname: 'api_tasks_list'
     build: './cloud/containers/tasks-list/'
     restart: always
     volumes:
-      - './cloud/containers/tasks-list/:/agenda'
-      - './cloud/storage/commons/:/agenda/commons'
-      - './data:/agenda/data'
+      - './cloud/containers/tasks-list/:/calendario'
+      - './cloud/storage/commons/:/calendario/commons'
+      - './data:/calendario/data'
 
   api_tasks_get:
     hostname: 'api_tasks_get'
     build: './cloud/containers/tasks-get/'
     restart: always
     volumes:
-      - './cloud/containers/tasks-get/:/agenda'
-      - './cloud/storage/commons/:/agenda/commons'
-      - './data:/agenda/data'
+      - './cloud/containers/tasks-get/:/calendario'
+      - './cloud/storage/commons/:/calendario/commons'
+      - './data:/calendario/data'
 
   api_tasks_update:
     hostname: 'api_tasks_update'
     build: './cloud/containers/tasks-update/'
     restart: always
     volumes:
-      - './cloud/containers/tasks-update/:/agenda'
-      - './cloud/storage/commons/:/agenda/commons'
-      - './data:/agenda/data'
+      - './cloud/containers/tasks-update/:/calendario'
+      - './cloud/storage/commons/:/calendario/commons'
+      - './data:/calendario/data'

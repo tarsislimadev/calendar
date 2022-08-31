@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda</title>
+  <title>Calendario</title>
 </head>
 
 <body>
@@ -50,7 +50,7 @@
     button.setStyle('padding', '0.5rem')
     button.setStyle('background-color', '#000099')
     button.on('click', () => {
-      const { _id } = Local.get('update')
+      const { _id } = Params.get('update')
       const where = input_where.input.getValue()
       const who = input_who.input.getValue()
       const start_date = input_start_date.getValue()
@@ -63,7 +63,7 @@
     })
     center.append(button)
 
-    Api.get(Local.get('update'))
+    Api.get(Params.get('update'))
       .then((res) => {
         const task = { where, who, start_date, end_date, why } = res.get('task')
 
