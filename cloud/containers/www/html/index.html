@@ -74,12 +74,12 @@
 
       const footer = new nFlex()
 
-      footer.append(createButton('update', () => {
+      footer.append(createButton('Alterar', () => {
         Params.set('update', event)
         Flow.goTo('update.html', event)
       }))
 
-      footer.append(createButton('delete', () => {
+      footer.append(createButton('Apagar', () => {
         Params.set('delete', event)
         Flow.goTo('delete.html', event)
       }))
@@ -93,10 +93,9 @@
 
     const list = () => Api.list()
       .then((res) => {
-        error.setText('')
         tasksList.clear()
 
-        const list = Array.from(res.getData()['list'])
+        const list = (res.getArray('list'))
 
         if (list.length === 0) {
           tasksList.append((new nText).setText('No items'))
@@ -104,6 +103,7 @@
           list.map((item) => tasksList.push(item))
         }
       })
+      .then(() => error.setText(''))
       .catch((err) => {
         tasksList.clear()
         error.setText(err.message)
