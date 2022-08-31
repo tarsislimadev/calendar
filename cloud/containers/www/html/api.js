@@ -100,6 +100,10 @@ class SuccessResponse extends AjaxResponse {
   get(name) {
     return this.getData()[name]
   }
+
+  getArray(name) {
+    return Array.from(this.get(name))
+  }
 }
 
 class ErrorResponse extends AjaxResponse { }
@@ -142,7 +146,7 @@ Api.list = () => Ajax.post([Ajax.servers.default.url, 'tasks', 'list'], {})
 
 Api.get = ({ _id }) => Ajax.post([Ajax.servers.default.url, 'tasks', 'get'], { _id })
 
-Api.update = (id, { where, who, start_date, end_date, why }) =>
+Api.update = (_id, { where, who, start_date, end_date, why }) => 
   Forms.with({ where, who, start_date, end_date, why })
     .validate({
       where: [Validations.required(),],
@@ -151,4 +155,4 @@ Api.update = (id, { where, who, start_date, end_date, why }) =>
       end_date: [Validations.required(),],
       why: [Validations.required(),],
     })
-    .then(() => Base.replace('events', id, { where, who, start_date, end_date, why }))
+    .then(() => Ajax.post([Ajax.servers.default.url, 'tasks', 'update'], { _id, where, who, start_date, end_date, why }))
