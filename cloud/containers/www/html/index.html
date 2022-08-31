@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Agenda</title>
+  <title>Calendario</title>
 </head>
 
 <body>
@@ -17,8 +17,6 @@
   <script src="./api.js"></script>
 
   <script>
-    Local.clear()
-
     const app = nTag.fromId('app')
     app.append(title)
 
@@ -36,25 +34,31 @@
 
       const start_date = new nTag()
       start_date.setStyle('margin-bottom', '0.5rem')
-      const [sday, smonth, syear, shour, sminute] = (event.start_date || '').split('-')
-      start_date.setText(`${sday}/${smonth}/${syear} ${shour}:${sminute}hs`)
+      const [sday, smonth, syear, shour, sminute] = (event.start_date || '').split(' ')
+      start_date.setText(`Desde: ${sday}/${smonth}/${syear} ${shour}:${sminute}hs`)
       item.append(start_date)
 
-      const end_date = new nTag()
-      end_date.setStyle('margin-bottom', '0.5rem')
-      const [eday, emonth, eyear, ehour, eminute] = (event.end_date || '').split('-')
-      end_date.setText(`${eday}/${emonth}/${eyear} ${ehour}:${eminute}hs`)
-      item.append(end_date)
+      if (event.end_date) {
+        const end_date = new nTag()
+        end_date.setStyle('margin-bottom', '0.5rem')
+        const [eday, emonth, eyear, ehour, eminute] = (event.end_date || '').split(' ')
+        end_date.setText(`Até: ${eday}/${emonth}/${eyear} ${ehour}:${eminute}hs`)
+        item.append(end_date)
+      }
 
-      const who = new nTag()
-      who.setStyle('margin-bottom', '0.5rem')
-      who.setText(event.who)
-      item.append(who)
+      if (event.who) {
+        const who = new nTag()
+        who.setStyle('margin-bottom', '0.5rem')
+        who.setText(`Quem: ${event.who}`)
+        item.append(who)
+      }
 
-      const why = new nTag()
-      why.setStyle('margin-bottom', '0.5rem')
-      why.setText(event.why)
-      item.append(why)
+      if (event.why) {
+        const why = new nTag()
+        why.setStyle('margin-bottom', '0.5rem')
+        why.setText(`Por que: ${event.why}`)
+        item.append(why)
+      }
 
       const createButton = (text, btnFn) => {
         const btn = new nButton()
@@ -71,12 +75,12 @@
       const footer = new nFlex()
 
       footer.append(createButton('update', () => {
-        Local.set('update', event)
+        Params.set('update', event)
         Flow.goTo('update.html', event)
       }))
 
       footer.append(createButton('delete', () => {
-        Local.set('delete', event)
+        Params.set('delete', event)
         Flow.goTo('delete.html', event)
       }))
 
