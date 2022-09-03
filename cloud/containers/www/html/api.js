@@ -1,40 +1,62 @@
 
 const Params = {}
 
-Params.get = (name) =>
-  JSON.parse(localStorage.getItem(['params', name].join('.')))
+Params.get = (name, _default) =>
+  (JSON.parse(localStorage.getItem(['params', name].join('.')))) || _default
 
 Params.set = (name, value) =>
   localStorage.setItem(['params', name].join('.'), JSON.stringify(value))
 
+class DataResult {
+  data = {}
+
+  constructor(data = {}) {
+    this.data = data
+  }
+
+  getData() {
+    return this.data
+  }
+
+  getArray(name) {
+    return Array.from(this.data[name])
+  }
+
+  get(name) {
+    return this.data[name]
+  }
+}
+
 const Base = {}
 
-Base.retrieve = (name) => {
-  const table = JSON.parse(localStorage.getItem(['base', name].join('.')))
-  if (!table) return []
-  return table
-    .filter((item) => !!item)
-    .map((item, ix) => {
-      item._id = ix
-      return item
-    })
-}
+Base.select = (name) => new Promise((resolve) => {
+  let list = JSON.parse(localStorage.getItem(['base', name].join('.')))
+  if (!list) list = []
+  resolve(new DataResult({ list }))
+})
 
-Base.setItem = (name, data) =>
-  localStorage.setItem(['base', name].join('.'), JSON.stringify(data))
+Base.selectWhere = (name, where) => Base.select(name)
+  .then((res) => res.getArray('list'))
+  .then((list) => list.filter((value) => Object.keys(where).every((key) => where[key] == value[key])))
+  .then((list) => new DataResult({ list }))
 
-Base.append = (name, data) => {
-  const arr = Base.retrieve(name)
-  arr.push(data)
-  Base.setItem(name, arr)
-}
+Base.insert = (name, data) => Base.select(name)
+  .then((res) => res.getArray('list'))
+  .then((list) => ([...list, data]))
+  .then((list) => localStorage.setItem(['base', name].join('.'), JSON.stringify(list)))
+  .then(() => ({ status: 'ok' }))
 
-Base.replace = (name, id, data) => {
-  const arr = Base.retrieve(name)
-  const _arr = arr.map((obj) => obj._id === id ? data : obj)
-  Base.setItem(name, _arr)
-}
+Base.find = (name, id) => Base.select(name)
+    .then((res) => res.getArray('list'))
+    .then((list) => list.find((item) => item['_id'] === id))
+    .then((item) => new DataResult({ item }))
 
+Base.update = (name, id, data) => Base.select(name)
+    .then((res) => res.getArray('list'))
+    .then((list) => list.map((item) => item['_id'] === id ? data : item))
+    .then((list) => localStorage.setItem(['base', name].join('.'), JSON.stringify(list)))
+    .then(() => ({ status: 'ok' }))
+  
 class FormConstructor {
   fields = []
 
@@ -65,6 +87,11 @@ const Flow = new FlowConstructor
 
 const Validations = {
   required: (value, errorMessage = 'Required field.') => !value ? errorMessage : 'Required',
+}
+
+const MODE = {
+  ON: 'on',
+  OFF: 'off',
 }
 
 class AjaxResponse {
@@ -129,6 +156,8 @@ Ajax.post = (paths = [], data = {}) => new Promise((resolve, reject) => {
   xhr.send(JSON.stringify(data))
 })
 
+const isOn = () => Params.get('mode') === MODE.ON
+
 const Api = {}
 
 Api.create = ({ where, who, start_date, end_date, why }) =>
@@ -140,13 +169,21 @@ Api.create = ({ where, who, start_date, end_date, why }) =>
       end_date: [Validations.required(),],
       why: [Validations.required(),],
     })
-    .then(() => Ajax.post([Ajax.servers.default.url, 'tasks', 'create'], { where, who, start_date, end_date, why }))
+    .then(() => ({ where, who, start_date, end_date, why }))
+    .then((data) => isOn()
+      ? Ajax.post([Ajax.servers.default.url, 'tasks', 'create'], data)
+      : Base.insert('tasks', data)
+    )
 
-Api.list = () => Ajax.post([Ajax.servers.default.url, 'tasks', 'list'], {})
+Api.list = () => isOn()
+  ? Ajax.post([Ajax.servers.default.url, 'tasks', 'list'], {})
+  : Base.select('tasks', {})
 
-Api.get = ({ _id }) => Ajax.post([Ajax.servers.default.url, 'tasks', 'get'], { _id })
+Api.get = ({ _id }) => isOn()
+  ? Ajax.post([Ajax.servers.default.url, 'tasks', 'get'], { _id })
+  : Base.find('tasks', _id).then((res) => new DataResult({ task: res.get('item') }))
 
-Api.update = (_id, { where, who, start_date, end_date, why }) => 
+Api.update = (_id, { where, who, start_date, end_date, why }) =>
   Forms.with({ where, who, start_date, end_date, why })
     .validate({
       where: [Validations.required(),],
@@ -155,4 +192,8 @@ Api.update = (_id, { where, who, start_date, end_date, why }) =>
       end_date: [Validations.required(),],
       why: [Validations.required(),],
     })
-    .then(() => Ajax.post([Ajax.servers.default.url, 'tasks', 'update'], { _id, where, who, start_date, end_date, why }))
+    .then(() => ({ _id, where, who, start_date, end_date, why }))
+    .then((data) => isOn()
+      ? Ajax.post([Ajax.servers.default.url, 'tasks', 'update'], data)
+      : Base.update('tasks', _id, data)
+    )
