@@ -90,24 +90,13 @@
       return item
     })
 
-    const error = new nError()
-    tasksList.append(error)
-
     const list = () => Api.list()
-      .then((res) => {
-        tasksList.clear()
-        error.setText('')
-        return res.getArray('list')
-      })
+      .then((res) => [tasksList.clear(), res.getArray('list')][1])
       .then((list) => {
         if (list.length === 0) throw new Error('No items')
         else list.map((item) => tasksList.push(item))
       })
-      .catch((err) => {
-        tasksList.clear()
-        error.setText(err.message)
-        console.error(err)
-      })
+      .catch((err) => [tasksList.setText(err.message), console.error(err)])
 
     app.append(tasksList)
     list()
