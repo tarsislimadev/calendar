@@ -17,6 +17,8 @@
   <script src="./api.js"></script>
 
   <script>
+    Params.set('mode', MODE.OFF)
+
     const app = nTag.fromId('app')
     app.append(title)
 
@@ -94,16 +96,13 @@
     const list = () => Api.list()
       .then((res) => {
         tasksList.clear()
-
-        const list = (res.getArray('list'))
-
-        if (list.length === 0) {
-          tasksList.append((new nText).setText('No items'))
-        } else {
-          list.map((item) => tasksList.push(item))
-        }
+        error.setText('')
+        return res.getArray('list')
       })
-      .then(() => error.setText(''))
+      .then((list) => {
+        if (list.length === 0) throw new Error('No items')
+        else list.map((item) => tasksList.push(item))
+      })
       .catch((err) => {
         tasksList.clear()
         error.setText(err.message)
