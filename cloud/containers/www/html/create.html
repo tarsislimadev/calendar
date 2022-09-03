@@ -58,7 +58,7 @@
 
       Api.create({ where, who, start_date, end_date, why })
         .then(() => Flow.goTo('index.html'))
-        .catch(() => { })
+        .catch(console.error)
     })
     center.append(button)
 
