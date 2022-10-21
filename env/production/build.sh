@@ -1,1 +1,1 @@
-sudo docker build --network host --no-cache -t tmvdl/challenges:ubistart .
+docker-compose -f ./docker-compose.yaml build $@
