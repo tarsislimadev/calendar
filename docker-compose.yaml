@@ -13,36 +13,36 @@ services:
 
   api_tasks_create:
     hostname: 'api_tasks_create'
-    build: './src/tasks-create/'
+    build: './src/taskscreate/'
     restart: always
     volumes:
-      - './src/tasks-create/:/calendario'
-      - './src/commons/:/calendario/commons'
-      - './data:/calendario/data'
+      - './src/taskscreate/:/project'
+      - './src/main/:/commons'
+      - './data:/data'
 
   api_tasks_list:
     hostname: 'api_tasks_list'
-    build: './src/tasks-list/'
+    build: './src/taskslist/'
     restart: always
     volumes:
-      - './src/tasks-list/:/calendario'
-      - './src/commons/:/calendario/commons'
-      - './data:/calendario/data'
+      - './src/taskslist/:/project'
+      - './src/main/:/commons'
+      - './data:/data'
 
   api_tasks_get:
     hostname: 'api_tasks_get'
-    build: './src/tasks-get/'
+    build: './src/tasksget/'
     restart: always
     volumes:
-      - './src/tasks-get/:/calendario'
-      - './src/commons/:/calendario/commons'
-      - './data:/calendario/data'
+      - './src/tasksget/:/project'
+      - './src/main/:/commons'
+      - './data:/data'
 
-  api_tasks_update:
-    hostname: 'api_tasks_update'
-    build: './src/tasks-update/'
-    restart: always
-    volumes:
-      - './src/tasks-update/:/calendario'
-      - './src/commons/:/calendario/commons'
-      - './data:/calendario/data'
+  # api_tasks_update:
+  #   hostname: 'api_tasks_update'
+  #   build: './src/tasksupdate/'
+  #   restart: always
+  #   volumes:
+  #     - './src/tasksupdate/:/project'
+  #     - './src/main/:/commons'
+  #     - './data:/data'
