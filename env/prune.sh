@@ -1,4 +1,4 @@
-docker-compose -f docker-compose.yaml down --remove-orphans --rmi all 
+sudo rm -rf ./src/*
 
 sudo rm -rf ./data
 
