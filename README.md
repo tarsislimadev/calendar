@@ -9,8 +9,6 @@ Aplicativo para gestão de tarefas e compromissos.
 
 ## How to use
 
-TODO
-
 ## License
 
 [MIT](./LICENSE)
