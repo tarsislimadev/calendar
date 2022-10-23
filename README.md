@@ -1,5 +1,7 @@
 # Calendario
 
+Aplicativo para gestão de tarefas e compromissos.
+
 ## Stack
 
 [Docker](https://www.docker.com/)
