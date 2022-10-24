@@ -9,6 +9,10 @@ Aplicativo para gestão de tarefas e compromissos.
 
 ## How to use
 
+```sh
+docker run -d -p 80:80 tmvdl/challenges:calendario
+```
+
 ## License
 
 [MIT](./LICENSE)
