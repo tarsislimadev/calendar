@@ -1,0 +1,13 @@
+name: Docker Push 
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  explore:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo Runing workflow
