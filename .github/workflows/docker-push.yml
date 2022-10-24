@@ -1,13 +1,26 @@
-name: Docker Push 
+name: Docker push
 
 on:
   workflow_dispatch:
   push:
-    branches:
+    branches: 
       - 'main'
 
 jobs:
-  explore:
+  docker-push:
     runs-on: ubuntu-latest
     steps:
-      - run: echo Runing workflow
+      - name: Check out repository code
+        uses: actions/checkout@v2
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: tmvdl
+          password: ${{ secrets.GITHUBDOCKER }}
+      -
+        name: Build and Tag
+        run: sh env/build.sh 
+      -
+        name: Push
+        run: docker push tmvdl/challenges:calendario
