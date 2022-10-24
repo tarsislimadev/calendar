@@ -3,11 +3,12 @@ version: '3'
 services:
 
   www:
+    image: tmvdl/challenges:calendario
     hostname: www
     build: './src/www'
     restart: always
     volumes:
-      - './src/www/html:/usr/share/nginx/html'
+      - './src/www/:/app'
     ports:
       - '80:80'
 
