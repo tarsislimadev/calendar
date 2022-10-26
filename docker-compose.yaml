@@ -2,6 +2,16 @@ version: '3'
 
 services:
 
+  app:
+    image: tmvdl/challenges:calendario-app
+    hostname: app
+    build: './src/app'
+    restart: always
+    volumes:
+      - './src/app/:/app'
+    ports:
+      - '3000:80'
+
   www:
     image: tmvdl/challenges:calendario
     hostname: www
