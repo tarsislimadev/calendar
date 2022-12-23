@@ -20,6 +20,10 @@ docker run -d -p 80:80 tmvdl/challenges:calendario
 
 ```sh
 bash env/pull.sh 
+
+bash env/install.sh 
+
+bash env/up.sh 
 ```
 
 ## License
