@@ -3,8 +3,6 @@ version: '3'
 services:
 
   app:
-    image: tmvdl/challenges:calendario-app
-    hostname: app
     build: './src/app'
     restart: always
     volumes:
@@ -13,7 +11,7 @@ services:
       - '3000:80'
 
   www:
-    image: tmvdl/challenges:calendario
+    image: tmvdl/projects:calendar
     hostname: www
     build: './src/www'
     restart: always
@@ -49,11 +47,11 @@ services:
       - './src/main/:/commons'
       - './data:/data'
 
-  # api_tasks_update:
-  #   hostname: 'api_tasks_update'
-  #   build: './src/tasksupdate/'
-  #   restart: always
-  #   volumes:
-  #     - './src/tasksupdate/:/project'
-  #     - './src/main/:/commons'
-  #     - './data:/data'
+  api_tasks_update:
+    hostname: 'api_tasks_update'
+    build: './src/tasksupdate/'
+    restart: always
+    volumes:
+      - './src/tasksupdate/:/project'
+      - './src/main/:/commons'
+      - './data:/data'
