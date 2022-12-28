@@ -4,26 +4,24 @@ services:
 
   app:
     build: './src/app'
-    restart: always
     volumes:
       - './src/app/:/app'
     ports:
-      - '3000:80'
+      - '80:80'
 
   www:
-    image: tmvdl/projects:calendar
-    hostname: www
+    image: 'tmvdl/projects:calendar'
+    container_name: 'www'
+    hostname: 'www'
     build: './src/www'
-    restart: always
     volumes:
       - './src/www/:/app'
     ports:
-      - '80:80'
+      - '3000:3000'
 
   api_tasks_create:
     hostname: 'api_tasks_create'
     build: './src/taskscreate/'
-    restart: always
     volumes:
       - './src/taskscreate/:/project'
       - './src/main/:/commons'
@@ -32,7 +30,6 @@ services:
   api_tasks_list:
     hostname: 'api_tasks_list'
     build: './src/taskslist/'
-    restart: always
     volumes:
       - './src/taskslist/:/project'
       - './src/main/:/commons'
@@ -41,7 +38,6 @@ services:
   api_tasks_get:
     hostname: 'api_tasks_get'
     build: './src/tasksget/'
-    restart: always
     volumes:
       - './src/tasksget/:/project'
       - './src/main/:/commons'
@@ -50,7 +46,6 @@ services:
   api_tasks_update:
     hostname: 'api_tasks_update'
     build: './src/tasksupdate/'
-    restart: always
     volumes:
       - './src/tasksupdate/:/project'
       - './src/main/:/commons'
