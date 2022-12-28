@@ -23,4 +23,4 @@ jobs:
         run: sh env/build.sh 
       -
         name: Push
-        run: docker push tmvdl/challenges:calendario
+        run: docker push tmvdl/projects:calendar
