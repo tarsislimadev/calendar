@@ -13,7 +13,7 @@ Aplicativo para gestão de tarefas e compromissos.
 ### Em produção
 
 ```sh
-docker run -d -p 80:80 tmvdl/challenges:calendario
+docker run -d -p 80:80 tmvdl/projects:calendar
 ```
 
 ### Em desenvolvimento
