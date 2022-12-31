@@ -3,6 +3,7 @@ version: '3'
 services:
 
   app:
+    image: 'app'
     build: './src/app'
     volumes:
       - './src/app/:/app'
