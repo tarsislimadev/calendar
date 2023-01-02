@@ -4,21 +4,15 @@ services:
 
   app:
     image: 'app'
-    build: './src/app'
-    volumes:
-      - './src/app/:/app'
-    ports:
-      - '80:80'
+    build: './src'
 
   www:
     image: 'tmvdl/projects:calendar'
-    container_name: 'www'
-    hostname: 'www'
     build: './src/www'
     volumes:
       - './src/www/:/app'
     ports:
-      - '3000:3000'
+      - '80:80'
 
   api_tasks_create:
     hostname: 'api_tasks_create'
