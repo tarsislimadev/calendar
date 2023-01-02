@@ -19,9 +19,9 @@ jobs:
         run: docker-compose build app
 
       - name: Export app
-        run: docker run -v $(pwd)/dist:/dist -w /dist app cp /app/hello/platforms/android/app/build/outputs/apk/debug/*.apk . 
+        run: docker run -v $(pwd)/apk:/apk -w /apk app cp /app/hello/platforms/android/app/build/outputs/apk/debug . -rfv
 
       - name: Create release
-        run: gh release create v$( date +%Y%m%d%H%M ) ./dist/*.apk
+        run: gh release create v$( date +%Y%m%d%H%M ) ./apk/debug/app-debug.apk
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
