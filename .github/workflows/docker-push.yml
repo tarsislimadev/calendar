@@ -10,17 +10,17 @@ jobs:
   docker-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Check out repository code
+      - name: Check out
         uses: actions/checkout@v2
-      -
-        name: Login to DockerHub
+
+      - name: Docker Login
         uses: docker/login-action@v1 
         with:
           username: tmvdl
           password: ${{ secrets.GITHUBDOCKER }}
-      -
-        name: Build and Tag
-        run: sh env/build.sh 
-      -
-        name: Push
+
+      - name: Docker build
+        run: docker-compose build
+
+      - name: Docker push
         run: docker push tmvdl/projects:calendar
