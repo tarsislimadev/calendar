@@ -15,8 +15,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Environment pull
-        run: bash env/pull.sh
+      - name: Pull project
+        run: bash env/pull.sh 
+        env:
+          GH_TOKEN: ${{ github.token }}
 
       - name: Build app
         run: docker-compose build app
@@ -27,4 +29,4 @@ jobs:
       - name: Create release
         run: gh release create v$( date +%Y%m%d%H%M ) ./dist/*.apk
         env:
-            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
