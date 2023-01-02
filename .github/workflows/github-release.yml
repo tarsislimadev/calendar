@@ -15,6 +15,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Environment pull
+        run: bash env/pull.sh
+
       - name: Build app
         run: docker-compose build app
 
