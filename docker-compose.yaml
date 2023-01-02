@@ -14,34 +14,34 @@ services:
     ports:
       - '80:80'
 
-  api_tasks_create:
-    hostname: 'api_tasks_create'
-    build: './src/taskscreate/'
-    volumes:
-      - './src/taskscreate/:/project'
-      - './src/main/:/commons'
-      - './data:/data'
+  # api_tasks_create:
+  #   hostname: 'api_tasks_create'
+  #   build: './src/taskscreate/'
+  #   volumes:
+  #     - './src/taskscreate/:/project'
+  #     - './src/main/:/commons'
+  #     - './data:/data'
 
-  api_tasks_list:
-    hostname: 'api_tasks_list'
-    build: './src/taskslist/'
-    volumes:
-      - './src/taskslist/:/project'
-      - './src/main/:/commons'
-      - './data:/data'
+  # api_tasks_list:
+  #   hostname: 'api_tasks_list'
+  #   build: './src/taskslist/'
+  #   volumes:
+  #     - './src/taskslist/:/project'
+  #     - './src/main/:/commons'
+  #     - './data:/data'
 
-  api_tasks_get:
-    hostname: 'api_tasks_get'
-    build: './src/tasksget/'
-    volumes:
-      - './src/tasksget/:/project'
-      - './src/main/:/commons'
-      - './data:/data'
+  # api_tasks_get:
+  #   hostname: 'api_tasks_get'
+  #   build: './src/tasksget/'
+  #   volumes:
+  #     - './src/tasksget/:/project'
+  #     - './src/main/:/commons'
+  #     - './data:/data'
 
-  api_tasks_update:
-    hostname: 'api_tasks_update'
-    build: './src/tasksupdate/'
-    volumes:
-      - './src/tasksupdate/:/project'
-      - './src/main/:/commons'
-      - './data:/data'
+  # api_tasks_update:
+  #   hostname: 'api_tasks_update'
+  #   build: './src/tasksupdate/'
+  #   volumes:
+  #     - './src/tasksupdate/:/project'
+  #     - './src/main/:/commons'
+  #     - './data:/data'
