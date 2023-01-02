@@ -15,11 +15,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Pull project
-        run: bash env/pull.sh 
-        env:
-          GH_TOKEN: ${{ github.token }}
-
       - name: Build app
         run: docker-compose build app
 
