@@ -92,7 +92,7 @@ class nRadioGroup extends nTag {
     radio.setContainerStyle('line-height', '2rem')
     radio.setContainerStyle('text-align', 'center')
 
-    radio.setStyle('background-color', '#dad8cf')
+    radio.setStyle('background-color', '#000000')
     radio.setStyle('padding', '1rem')
 
     this.flex.append(radio)
