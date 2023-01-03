@@ -1,6 +1,6 @@
-# Calendario
+# Calendar
 
-Aplicativo para gestão de tarefas e compromissos.
+App to manage tasks.
 
 ## Stack
 
@@ -8,15 +8,15 @@ Aplicativo para gestão de tarefas e compromissos.
 
 [Node.js](https://nodejs.org/en/)
 
-## Como usar
+## How to
 
-### Em produção
+### Production
 
 ```sh
 docker run -d -p 80:80 tmvdl/projects:calendar
 ```
 
-### Em desenvolvimento
+### Development
 
 ```sh
 bash env/pull.sh 
