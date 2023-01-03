@@ -7,7 +7,7 @@ nTag.fromElement(document.body)
   .setStyle('background-color', '#eeeeee')
 
 const title = new nText()
-title.setText('Calendario')
+title.setText('Calendar')
 title.setStyle('color', '#f0f0f0')
 title.setStyle('padding', '1rem 0')
 title.setStyle('font-weight', 'bold')
