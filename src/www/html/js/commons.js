@@ -3,7 +3,7 @@ nTag.fromElement(document.body)
   .setStyle('margin', '0')
   .setStyle('padding', '0')
   .setStyle('font-size', '16px')
-  .setStyle('font-family', 'sans-serif')
+  .setStyle('font-family', "'Courier New', Courier, monospace")
 
 const title = new nText()
 
