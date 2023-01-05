@@ -4,7 +4,6 @@ nTag.fromElement(document.body)
   .setStyle('padding', '0')
   .setStyle('font-size', '16px')
   .setStyle('font-family', 'sans-serif')
-  .setStyle('background-color', '#eeeeee')
 
 const title = new nText()
 
