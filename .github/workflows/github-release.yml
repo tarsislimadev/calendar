@@ -12,16 +12,16 @@ jobs:
   artifacts:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
+      - name: Check out
         uses: actions/checkout@v3
 
       - name: Build app
         run: docker-compose build app
 
       - name: Export app
-        run: docker run -v $(pwd)/apk:/apk -w /apk app cp /app/hello/platforms/android/app/build/outputs/apk/debug . -rfv
+        run: docker run -v $(pwd)/dist:/dist -w /dist app cp /app/hello/platforms/android/app/build/outputs/*.apk . -rfv
 
       - name: Create release
-        run: gh release create v$( date +%Y%m%d%H%M ) ./apk/debug/app-debug.apk
+        run: gh release create v$( date +%Y%m%d%H%M ) ./dist/*.apk
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
