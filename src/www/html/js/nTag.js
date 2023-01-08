@@ -239,6 +239,12 @@ class nLabel extends nTag {
 }
 
 class Valuable extends nTag {
+  maxlength = undefined
+
+  setMaxLength(value) {
+    this.element.maxlength = this.maxlength = value
+    return this
+  }
 
   getValue() {
     return this.element.value
