@@ -6,7 +6,7 @@ RUN cordova create nume com.brtmvdl.nume Nume
 
 WORKDIR /app/nume
 
-COPY www www
+COPY www/html www
 
 RUN cordova platform add android
 
