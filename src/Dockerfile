@@ -1,9 +1,15 @@
-FROM tmvdl/android:ionic
+FROM tmvdl/android:cordova
 
 WORKDIR /app
 
+RUN cordova create nume com.brtmvdl.nume Nume
+
+WORKDIR /app/nume
+
 COPY www www
 
-RUN cordova build android
+COPY cp.sh .
 
-CMD echo OK
+RUN cordova platform add android
+
+RUN cordova build android
