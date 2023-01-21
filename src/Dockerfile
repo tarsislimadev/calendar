@@ -1,10 +1,10 @@
-FROM tmvdl/android:ionic
+FROM tmvdl/android:ionic-jdk8
 
 WORKDIR /app
 
-RUN cordova create nume com.brtmvdl.nume Nume
+RUN cordova create calendar com.brtmvdl.calendar calendar
 
-WORKDIR /app/nume
+WORKDIR /app/calendar
 
 COPY www/html www
 
