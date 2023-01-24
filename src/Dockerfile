@@ -1,4 +1,4 @@
-FROM tmvdl/android:ionic-jdk8
+FROM tmvdl/android:ionic
 
 WORKDIR /app
 
