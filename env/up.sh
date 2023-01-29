@@ -1,1 +1,1 @@
-docker-compose -f docker-compose.yaml up --remove-orphans --force-recreate --build www
+docker-compose up --remove-orphans --force-recreate --build www
