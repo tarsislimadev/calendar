@@ -25,3 +25,5 @@ const request = (method = 'GET', pathname = '/', headers = new Headers(), data =
 })
 
 export const saveEvent = (data) => request('POST', 'events/save', {}, data)
+
+export const listEvents = () => request('GET', 'events/list')

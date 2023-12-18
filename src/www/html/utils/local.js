@@ -1,17 +1,27 @@
 // 
 
+const name = (n) => n.join('.')
+
 export const set = (path, data = {}) => new Promise((s) => {
-  localStorage.setItem(path.join('.'), JSON.stringify(data))
+  localStorage.setItem(name(path), JSON.stringify(data))
   s({})
 })
 
-// export const add = (path, data = {}) => new Promise((s) => { })
+export const add = (path, data = {}) => get(path, [])
+  .then((list) => [list.push(data), list, console.log({ list })][1])
+  .then((list) => set(path, list))
+  .then((list) => list)
 
 export const get = (path, def = null) => new Promise((s, f) => {
-  const item = localStorage.getItem(path.join('.'))
-
   try {
-    !!item ? s(JSON.parse(item)) : s(def)
+    const item = localStorage.getItem(name(path))
+
+    if (item) {
+      s(JSON.parse(item))
+    } else {
+      s(def)
+    }
+
   } catch (e) {
     console.error(e)
     f(new Error('Item not found.'))

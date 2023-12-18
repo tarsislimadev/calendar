@@ -4,6 +4,8 @@ import * as Local from './local.js'
 
 export const setOn = (on = true) => Local.set(['on'], on)
 
-export const getOn = () => Local.get(['on'], false)
+export const getOn = (def = false) => Local.get(['on'], def)
 
-export const saveEvent = (data) => getOn() ? Server.saveEvent(data) : Local.add(['events'], data) 
+export const saveEvent = (data) => getOn().then((on) => on ? Server.saveEvent(data) : Local.add(['events'], data))
+
+export const listEvents = (data) => getOn().then((on) => on ? Server.listEvents(data) : Local.get(['events'], []))
