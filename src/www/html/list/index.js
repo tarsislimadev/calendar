@@ -11,9 +11,27 @@ class Container extends HTML {
   }
 }
 
+class nFloattingButton extends nButton {
+  onCreate() {
+    super.onCreate()
+
+    this.setContainerStyle('position', 'fixed')
+    this.setContainerStyle('bottom', '2rem')
+    this.setContainerStyle('right', '2rem')
+
+    this.setStyle('background-color', '#000000')
+    this.setStyle('display', 'inline-block')
+    this.setStyle('border-radius', '50%')
+    this.setStyle('color', '#ffffff')
+    this.setStyle('border', 'none')
+    this.setStyle('height', '2rem')
+    this.setStyle('width', '2rem')
+  }
+}
+
 export class Page extends HTML {
   children = {
-    createButton: new nButton(),
+    createButton: new nFloattingButton(),
     list: new HTML(),
     error_message: new nError(),
   }
@@ -32,18 +50,6 @@ export class Page extends HTML {
   getCreateButton() {
     this.children.createButton.setText('+')
     this.children.createButton.on('click', () => FLOW.goTo('/edit/', {}))
-
-    this.children.createButton.setContainerStyle('position', 'fixed')
-    this.children.createButton.setContainerStyle('bottom', '2rem')
-    this.children.createButton.setContainerStyle('right', '2rem')
-
-    this.children.createButton.setStyle('background-color', '#000000')
-    this.children.createButton.setStyle('display', 'inline-block')
-    this.children.createButton.setStyle('border-radius', '50%')
-    this.children.createButton.setStyle('color', '#ffffff')
-    this.children.createButton.setStyle('border', 'none')
-    this.children.createButton.setStyle('height', '2rem')
-    this.children.createButton.setStyle('width', '2rem')
     return this.children.createButton
   }
 
@@ -72,7 +78,7 @@ export class Page extends HTML {
     this.setList([])
 
     API.listEvents()
-      .then((arr) => Array.from(arr).map((res) => new EventModel(res)))
+      .then((arr) => Array.from(arr).map((res, id) => new EventModel({ ...res, id })))
       .then((arr) => this.setList(arr))
       .then(() => this.updateListHTML())
       .catch((err) => this.children.error_message.setText(err.message))

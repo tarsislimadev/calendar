@@ -1,4 +1,5 @@
 import { HTML, nError, nInputTextGroup, nButton, PageTop } from '../components/index.js'
+import { EventModel } from '../models/index.js'
 import * as FLOW from '../utils/flow.js'
 import * as API from '../utils/api.js'
 
@@ -16,7 +17,8 @@ export class Page extends HTML {
   }
 
   state = {
-    data: null,
+    id: null,
+    data: new EventModel(),
   }
 
   onCreate() {
@@ -74,19 +76,26 @@ export class Page extends HTML {
     return this.children.how
   }
 
+  getInputValue(input) {
+    return this.children[input].children.input.getValue()
+  }
+
   getSaveButton() {
     this.children.save_button.setText('save')
     this.children.save_button.on('click', () => {
       this.children.error_message.clear()
 
-      const what = this.children.what.children.input.getValue()
-      const when_starts = this.children.when_starts.children.input.getValue()
-      const when_ends = this.children.when_ends.children.input.getValue()
-      const who = this.children.who.children.input.getValue()
-      const where = this.children.where.children.input.getValue()
-      const how = this.children.how.children.input.getValue()
+      const event = new EventModel()
 
-      API.saveEvent({ what, when_starts, when_ends, who, where, how })
+      event.id = this.state.id
+      event.what = this.getInputValue('what')
+      event.when_starts = this.getInputValue('when_starts')
+      event.when_ends = this.getInputValue('when_ends')
+      event.who = this.getInputValue('who')
+      event.where = this.getInputValue('where')
+      event.how = this.getInputValue('how')
+
+      API.saveEvent(event)
         .then(() => FLOW.goTo('/list/'))
         .catch((err) => this.children.error_message.setText(err.message))
     })
@@ -95,13 +104,14 @@ export class Page extends HTML {
   }
 
   retrieveData() {
-    FLOW.getData().then((data) => this.state.data = data).then(() => {
-      this.children.what.children.input.setValue(this.state.data?.what)
-      this.children.when_starts.children.input.setValue(this.state.data?.when_starts)
-      this.children.when_ends.children.input.setValue(this.state.data?.when_ends)
-      this.children.who.children.input.setValue(this.state.data?.who)
-      this.children.where.children.input.setValue(this.state.data?.where)
-      this.children.how.children.input.setValue(this.state.data?.how)
+    FLOW.getData().then((data = new EventModel()) => {
+      this.state.id = data?.id
+      this.children.what.children.input.setValue(data?.what)
+      this.children.when_starts.children.input.setValue(data?.when_starts)
+      this.children.when_ends.children.input.setValue(data?.when_ends)
+      this.children.who.children.input.setValue(data?.who)
+      this.children.where.children.input.setValue(data?.where)
+      this.children.how.children.input.setValue(data?.how)
     })
   }
 }

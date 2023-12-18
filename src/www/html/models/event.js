@@ -1,6 +1,7 @@
 import { Model } from './model.js'
 
 export class EventModel extends Model {
+  id = null
   how = ''
   what = ''
   when_ends = ''
@@ -8,9 +9,10 @@ export class EventModel extends Model {
   where = ''
   who = ''
 
-  constructor({ how = '', what = '', when_ends = '', when_starts = '', where = '', who = '' } = {}) {
+  constructor({ id = null, how = '', what = '', when_ends = '', when_starts = '', where = '', who = '' } = {}) {
     super()
 
+    this.id = id
     this.how = how
     this.what = what
     this.when_ends = when_ends
