@@ -1,6 +1,7 @@
 import { HTML, nButton } from '@brtmvdl/frontend'
 import { Component } from './component.js'
 import * as FLOW from '../utils/flow.js'
+import * as Local from '../utils/local.js'
 
 export class EventComponent extends Component {
   children = {
@@ -64,7 +65,12 @@ export class EventComponent extends Component {
 
   getDeleteButton() {
     this.children.delete_button.setText('delete')
-    this.children.delete_button.on('click', () => FLOW.goTo('/delete/', this.model))
+    this.children.delete_button.on('click', () => {
+      Local.get(['events']).then((events) => {
+        Local.set(['events'], Array.from(events).filter((_, id) => id != this.model.id))
+        FLOW.goTo('?')
+      })
+    })
     return this.children.delete_button
   }
 
