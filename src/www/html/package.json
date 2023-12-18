@@ -1,0 +1,7 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "dependencies": {
+    "@brtmvdl/frontend": "^1.0.12"
+  }
+}

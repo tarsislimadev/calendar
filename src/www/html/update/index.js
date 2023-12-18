@@ -1,4 +1,4 @@
-import { HTML } from '@brtmvdl/frontend'
+import { HTML } from '../components/index.js'
 
 export class Page extends HTML {
   onCreate() {
