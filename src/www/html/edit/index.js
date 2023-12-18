@@ -15,6 +15,10 @@ export class Page extends HTML {
     save_button: new nButton(),
   }
 
+  state = {
+    data: null,
+  }
+
   onCreate() {
     this.append(new PageTop())
     this.append(this.getErrorMessage())
@@ -26,6 +30,8 @@ export class Page extends HTML {
     this.append(this.getWhereInput())
     this.append(this.getHowInput())
     this.append(this.getSaveButton())
+    //
+    this.retrieveData()
   }
 
   getErrorMessage() {
@@ -86,5 +92,16 @@ export class Page extends HTML {
     })
 
     return this.children.save_button
+  }
+
+  retrieveData() {
+    FLOW.getData().then((data) => this.state.data = data).then(() => {
+      this.children.what.children.input.setValue(this.state.data?.what)
+      this.children.when_starts.children.input.setValue(this.state.data?.when_starts)
+      this.children.when_ends.children.input.setValue(this.state.data?.when_ends)
+      this.children.who.children.input.setValue(this.state.data?.who)
+      this.children.where.children.input.setValue(this.state.data?.where)
+      this.children.how.children.input.setValue(this.state.data?.how)
+    })
   }
 }

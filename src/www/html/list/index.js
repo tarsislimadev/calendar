@@ -31,7 +31,7 @@ export class Page extends HTML {
 
   getCreateButton() {
     this.children.createButton.setText('+')
-    this.children.createButton.on('click', () => FLOW.goTo('/create/'))
+    this.children.createButton.on('click', () => FLOW.goTo('/edit/', {}))
 
     this.children.createButton.setContainerStyle('position', 'fixed')
     this.children.createButton.setContainerStyle('bottom', '2rem')
