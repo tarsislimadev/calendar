@@ -1,8 +1,6 @@
 name: GitHub release
 
 on:
-  schedule:
-    - cron: '50 23 * * *'
   push:
     branches:
       - 'main'
@@ -15,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Docker Compose
+        run: apt update && apt install -y docker-compose
+
       - name: Docker build
         run: docker-compose build github-release
 
@@ -25,3 +26,4 @@ jobs:
         run: gh release create v$( date +%Y%m%d%H%M ) ./dist/app-debug.apk
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
