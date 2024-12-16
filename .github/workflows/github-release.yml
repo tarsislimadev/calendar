@@ -1,9 +1,6 @@
 name: GitHub release
 
 on:
-  push:
-    branches:
-      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -26,4 +23,3 @@ jobs:
         run: gh release create v$( date +%Y%m%d%H%M ) ./dist/app-debug.apk
         env:
             GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
